@@ -7,13 +7,18 @@
             <label for="username">Username</label>
             <input type="text" id="username" formControlName="username" class="form-control">
             <span *ngIf="!signupForm.get('userData.username').valid && signupForm.get('userData.username').touched"
-              class="help-block">Please enter a username</span>
+              class="help-block">
+              <span *ngIf="signupForm.get('userData.username').errors['nameIsForbidden']" class="help-block">
+                Please enter a valid username</span>
+              <span *ngIf="signupForm.get('userData.username').errors['required']" class="help-block">
+                This field is required</span>
+            </span>
           </div>
           <div class="form-group">
             <label for="email">email</label>
             <input type="text" id="email" formControlName="email" class="form-control">
             <span *ngIf="!signupForm.get('userData.email').valid && signupForm.get('userData.email').touched"
-            class="help-block">Please enter a valid email address</span>
+              class="help-block">Please enter a valid email address</span>
           </div>
         </div>
         <div class="radio" *ngFor="let gender of genders">
@@ -25,13 +30,12 @@
           <h4>Your Hobbies</h4>
           <button class="btn btn-primary" type="button" (click)="onAddHobby()">Add Hobby</button>
         </div>
-        <div *ngFor="let hobbyControl of getControls(); let i = index" 
-          class="form-group">
+        <div *ngFor="let hobbyControl of getControls(); let i = index" class="form-group">
           <input type="text" class="form-control" [formControl]="hobbyControl">
         </div>
-        <span *ngIf="!signupForm.valid && signupForm.touched"
-        class="help-block">Please fill in the form correctly</span>
-        <button class="btn btn-primary" type="submit">Submit</button>
+        <span *ngIf="!signupForm.valid && signupForm.touched" class="help-block">Please fill in the form
+          correctly</span>
+        <button class="btn btn-primary" type="submit" [disabled]="signupForm.invalid">Submit</button>
       </form>
     </div>
   </div>
